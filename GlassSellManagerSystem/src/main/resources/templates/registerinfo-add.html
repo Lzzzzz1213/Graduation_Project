@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>视力信息登记页面</title>
+    <meta content="webkit" name="renderer">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
+          name="viewport"/>
+    <link th:href="@{/css/font.css}" rel="stylesheet">
+    <link th:href="@{/css/xadmin.css}" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
+    <script th:src="@{/js/xadmin.js}" type="text/javascript"></script>
+    <script th:src="@{/js/xcity.js}" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="layui-main">
+    <div id="LAY_preview">
+        <div class="layui-form layui-border-box layui-table-view">
+            <div class="layui-table-box">
+                <div class="layui-table-body">
+                    <form class="layui-form layui-form-pane" action="">
+                        <input hidden="hidden" th:value="${customer.customer_id}" name="registerInfo_customerId">
+                        <input hidden="hidden" th:value="${session.user.id}" name="registerInfo_userId">
+                        <input hidden="hidden" th:value="${session.user.name}" name="registerInfo_userName">
+                        <input hidden="hidden" th:value="${customer.customer_name}" name="registerInfo_customerName">
+                        <table border="0" cellpadding="0" cellspacing="0" class="layui-table"
+                               style="text-align: center">
+                            <tbody>
+                            <tr>
+                                <td colspan="9">视力美视力健康管理机构</td>
+                            </tr>
+                            <tr>
+                                <td>姓名</td>
+                                <td th:text="${customer.customer_name}"></td>
+                                <td>性别</td>
+                                <td th:text="${customer.customer_sex}"></td>
+                                <td>年龄</td>
+                                <td th:text="${age}">[[${age}]]</td>
+                                <td>所在学校</td>
+                                <td width="200" th:text="${customer.customer_schoolName}"></td>
+                            </tr>
+                            <tr>
+                                <td>家庭住址</td>
+                                <td colspan="5" th:text="${customer.customer_address}"></td>
+                                <td>QQ号码</td>
+                                <td th:text="${customer.customer_qqNumber}"></td>
+                            </tr>
+                            <tr>
+                                <td>联系电话</td>
+                                <td colspan="2" th:text="${customer.customer_phoneNumber}"></td>
+                                <td>座机电话</td>
+                                <td colspan="2" th:text="${customer.customer_phoneNumber}"></td>
+                                <td>电子邮箱</td>
+                                <td th:text="${customer.customer_email}"></td>
+                            </tr>
+                            <tr>
+                                <td>裸眼视力</td>
+                                <td>右：<input type="text" style="width: 40px;border: none"
+                                             name="registerInfo_visionRight" lay-verify="registerInfo_visionRight"></td>
+                                <td>左：<input type="text" style="width: 40px;border: none" name="registerInfo_visionLeft"
+                                             lay-verify="registerInfo_visionLeft"></td>
+                                <td>配镜史</td>
+                                <td colspan="2"><input type="text" style="width: 150px;border: none" value=""
+                                                       name="registerInfo_history" lay-verify="registerInfo_history">
+                                </td>
+                                <td>镜架</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>用法</td>
+                                <td>球镜</td>
+                                <td>柱镜</td>
+                                <td>轴度</td>
+                                <td>矫正视力</td>
+                                <td colspan="3">瞳距</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" style="padding: 0">
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td rowspan="2">远用</td>
+                                            <td>右眼</td>
+                                        </tr>
+                                        <tr>
+                                            <td>左眼</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_loinMiroirDeBouleRight"
+                                           lay-verify="registerInfo_loinMiroirDeBouleRight"
+                                           id="registerInfo_loinMiroirDeBouleRight"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_loinMiroirDeColonneRight"
+                                           lay-verify="registerInfo_loinMiroirDeColonneRight"
+                                           id="registerInfo_loinMiroirDeColonneRight"></td>
+                                <td><input type="text" style="width: 60px;border: none" name="registerInfo_loinAxeRight"
+                                           lay-verify="registerInfo_loinAxeRight" id="registerInfo_loinAxeRight"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_loinCorrectionRight"
+                                           lay-verify="registerInfo_loinCorrectionRight"
+                                           id="registerInfo_loinCorrectionRight"></td>
+                                <td colspan="3" rowspan="4">
+                                    右眼瞳距:<input type="text" style="width: 150px;border: none" name="registerInfo_PDRight"
+                                                lay-verify="registerInfo_PDRight"><br>
+                                    左眼瞳距:<input type="text" style="width: 150px;border: none" name="registerInfo_PDLeft"
+                                                lay-verify="registerInfo_PDLeft"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_loinMiroirDeBouleLeft"
+                                           lay-verify="registerInfo_loinMiroirDeBouleLeft"
+                                           id="registerInfo_loinMiroirDeBouleLeft"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_loinMiroirDeColonneLeft"
+                                           lay-verify="registerInfo_loinMiroirDeColonneLeft"
+                                           id="registerInfo_loinMiroirDeColonneLeft"></td>
+                                <td><input type="text" style="width: 60px;border: none" name="registerInfo_loinAxeLeft"
+                                           lay-verify="registerInfo_loinAxeLeft" id="registerInfo_loinAxeLeft"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_loinCorrectionLeft"
+                                           lay-verify="registerInfo_loinCorrectionLeft"
+                                           id="registerInfo_loinCorrectionLeft"></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" style="padding: 0">
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td rowspan="2">近用</td>
+                                            <td>右眼</td>
+                                        </tr>
+                                        <tr>
+                                            <td>左眼</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheMiroirDeBouleRight"
+                                           lay-verify="registerInfo_procheMiroirDeBouleRight"
+                                           id="registerInfo_procheMiroirDeBouleRight"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheMiroirDeColonneRight"
+                                           lay-verify="registerInfo_procheMiroirDeColonneRight"
+                                           id="registerInfo_procheMiroirDeColonneRight"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheAxeRight" lay-verify="registerInfo_procheAxeRight"
+                                           id="registerInfo_procheAxeRight"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheCorrectionRight"
+                                           lay-verify="registerInfo_procheCorrectionRight"
+                                           id="registerInfo_procheCorrectionRight"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheMiroirDeBouleLeft"
+                                           lay-verify="registerInfo_procheMiroirDeBouleLeft"
+                                           id="registerInfo_procheMiroirDeBouleLeft"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheMiroirDeColonneLeft"
+                                           lay-verify="registerInfo_procheMiroirDeColonneLeft"
+                                           id="registerInfo_procheMiroirDeColonneLeft"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheAxeLeft" lay-verify="registerInfo_procheAxeLeft"
+                                           id="registerInfo_procheAxeLeft"></td>
+                                <td><input type="text" style="width: 60px;border: none"
+                                           name="registerInfo_procheCorrectionLeft"
+                                           lay-verify="registerInfo_procheCorrectionLeft"
+                                           id="registerInfo_procheCorrectionLeft"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <button class="layui-btn" lay-filter="submit" lay-submit="">提交</button>
+                                </td>
+                                <td colspan="4">
+                                    <button type="reset" class="layui-btn">重置</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    layui.use(['form'], function () {
+        form = layui.form;
+
+        form.verify({
+            registerInfo_visionRight: [/^[0-9]+(\.[0-9]{1,3})?$/, '请输入右眼裸眼视力'],
+            registerInfo_visionLeft: [/^[0-9]+(\.[0-9]{1,3})?$/, '请输入左眼裸眼视力'],
+            registerInfo_history: [/^.{1,20}$/, '请输入戴镜史'],
+            registerInfo_loinMiroirDeBouleRight: function (value) {
+                if ($('#registerInfo_loinMiroirDeBouleRight').val() == "" &&
+                    $('#registerInfo_procheMiroirDeBouleRight').val() == "") {
+                    return '请输入球镜数据!';
+                }
+            },registerInfo_loinMiroirDeBouleLeft: function (value) {
+                if ($('#registerInfo_loinMiroirDeBouleLeft').val() == "" &&
+                    $('#registerInfo_procheMiroirDeBouleLeft').val() == "") {
+                    return '请输入球镜数据!';
+                }
+            },
+            registerInfo_loinMiroirDeColonneRight: function (value) {
+                if ($('#registerInfo_loinMiroirDeColonneRight').val() == "" &&
+                $('#registerInfo_procheMiroirDeColonneRight').val() ==""){
+                    return '请输入柱镜数据!';
+                }
+            },registerInfo_loinMiroirDeColonneLeft: function (value) {
+                if ($('#registerInfo_loinMiroirDeColonneLeft').val() == "" &&
+                    $('#registerInfo_procheMiroirDeColonneLeft').val() ==""){
+                    return '请输入柱镜数据!';
+                }
+            },
+            registerInfo_loinAxeRight: function (value) {
+                if ($('#registerInfo_loinAxeRight').val() == "" &&
+                $('#registerInfo_procheAxeRight').val() == ""){
+                    return '请输入轴度数据!';
+                }
+            },registerInfo_loinAxeLeft: function (value) {
+                if ($('#registerInfo_loinAxeLeft').val() == "" &&
+                    $('#registerInfo_procheAxeLeft').val() == ""){
+                    return '请输入轴度数据!';
+                }
+            },
+            registerInfo_loinCorrectionRight: function (value) {
+                if ($('#registerInfo_loinCorrectionRight').val() == "" &&
+                $('#registerInfo_procheCorrectionRight').val() == ""){
+                    return '请输入矫正视力数据!';
+                }
+            },
+            registerInfo_loinCorrectionLeft: function (value) {
+                if ($('#registerInfo_loinCorrectionLeft').val() == "" &&
+                    $('#registerInfo_procheCorrectionLeft').val() == ""){
+                    return '请输入矫正视力数据!';
+                }
+            },
+            registerInfo_PDRight:[/^[0-9]+(\.[0-9]{1,3})?$/,'请输入右眼瞳距'],
+            registerInfo_PDLeft:[/^[0-9]+(\.[0-9]{1,3})?$/,'请输入左眼眼瞳距']
+        });
+        form.on('submit(submit)',
+            function (data) {
+                console.log(data);
+                addRegisterInfo(data.field);
+                return false;
+            });
+    });
+    function setRegisterInfo(data){
+        if ($('registerInfo_loinMiroirDeBouleRight').val() != ""){
+
+        }
+    }
+
+    function addRegisterInfo(data) {
+        $.ajax({
+            type: "POST",
+            // dataType:"json",
+            data: data,
+            url: "http://localhost:9911/user/registerInfo/addRegisterInfo",
+            success: function (data) {
+                layer.alert("登记成功", {
+                        icon: 6
+                    },
+                    function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+            },
+            error: function (message) {
+                layer.alert("登记失败", {
+                        icon: 5
+                    },
+                    function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+            }
+        })
+    }
+</script>
+</html>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.Order">
+        <result column="order_id" property="order_id" />
+        <result column="order_amount" property="order_amount" />
+        <result column="order_payAmount" property="order_payAmount" />
+        <result column="order_oderState" property="order_oderState" />
+        <result column="order_paymentState" property="order_paymentState" />
+        <result column="order_logisticsState" property="order_logisticsState" />
+        <result column="order_paymentWay" property="order_paymentWay" />
+        <result column="order_logisticsName" property="order_logisticsName" />
+        <result column="order_createDate" property="order_createDate" />
+        <result column="order_userId" property="order_userId" />
+        <result column="order_userName" property="order_userName" />
+        <result column="order_customerId" property="order_customerId" />
+        <result column="order_customerName" property="order_customerName" />
+        <result column="order_registerInfoId" property="order_registerInfoId" />
+        <result column="order_number" property="order_number" />
+        <result column="order_productDescribe" property="order_productDescribe" />
+        <result column="order_customerDegreeInfo" property="order_customerDegreeInfo" />
+        <result column="order_successDate" property="order_successDate" />
+    </resultMap>
+    <insert id="createOrder" parameterType="com.glasssellmanagersystem.pojo.Order" keyProperty="order_id" useGeneratedKeys="true">
+        insert into sys_order(order_userId,order_userName,order_customerId,order_customerName,order_createDate,order_registerInfoId,order_oderState)
+        values (#{order_userId},#{order_userName},#{order_customerId},#{order_customerName},#{order_createDate},#{order_registerInfoId},#{order_oderState})
+    </insert>
+    <update id="updateOrder" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update sys_order set
+            order_amount = #{order_amount},
+            order_payAmount = #{order_payAmount},
+            order_oderState = #{order_oderState},
+            order_paymentState = #{order_paymentState},
+            order_logisticsState = #{order_logisticsState},
+            order_paymentWay = #{order_paymentWay},
+            order_logisticsName = #{order_logisticsName},
+            order_productDescribe = #{order_productDescribe},
+            order_customerDegreeInfo = #{order_customerDegreeInfo},
+            order_number = #{order_number}
+        where order_id = #{order_id}
+    </update>
+    <update id="updatePaymentStateById" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update  sys_order set
+            order_paymentState = #{order_paymentState}
+        where order_id = #{order_id}
+    </update>
+    <update id="updateOrderLogisticsById" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update sys_order set
+            order_logisticsName = #{order_logisticsName},
+            order_logisticsState = #{order_logisticsState}
+        where order_id = #{order_id}
+    </update>
+    <update id="updateOrderStateById" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update sys_order set
+            order_oderState = #{order_oderState}
+        where order_id = #{order_id}
+    </update>
+    <update id="updateOrderSuccessDate" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update sys_order set
+            order_successDate = #{order_successDate}
+        where order_id = #{order_id}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="java.lang.Integer">
+        delete from sys_order where order_id = #{order_id}
+    </delete>
+    <delete id="deleteOrderByCustomerId" parameterType="java.lang.Integer">
+        delete from sys_order where order_customerId = #{order_customerId}
+    </delete>
+
+    <select id="findOrderByRegisterInfoId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*) from sys_order where order_registerInfoId = #{order_registerInfoId}
+    </select>
+    <select id="getAllOrdersList" resultMap="BaseResultMap">
+        select * from sys_order order by order_id
+            limit #{currentPage},#{pageSize}
+    </select>
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(order_id) from sys_order
+    </select>
+    <select id="findOrderById" resultMap="BaseResultMap">
+        select * from sys_order where order_id = #{order_id}
+    </select>
+    <select id="findAllOrderSByCustomerName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from sys_order where order_customerName = #{order_customerName}
+    </select>
+    <select id="totalOrderByCustomerName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from sys_order where order_customerName = #{order_customer}
+    </select>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.ReviewMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.Review">
+        <result column="review_customerId" property="review_customerId" />
+        <result column="review_customerName" property="review_customerName" />
+        <result column="review_userId" property="review_userId" />
+        <result column="review_userName" property="review_userName" />
+        <result column="review_id" property="review_id" />
+        <result column="review_createDate" property="review_createDate" />
+        <result column="review_UCVARight" property="review_UCVARight" />
+        <result column="review_UCVALeft" property="review_UCVALeft" />
+        <result column="review_CVARight" property="review_CVARight" />
+        <result column="review_CVALeft" property="review_CVALeft" />
+        <result column="review_Right" property="review_Right" />
+        <result column="review_Left" property="review_Left" />
+        <result column="review_positionOfEye" property="review_positionOfEye" />
+        <result column="review_ACA" property="review_ACA" />
+        <result column="review_suggest" property="review_suggest" />
+    </resultMap>
+    <insert id="addReview" parameterType="com.glasssellmanagersystem.pojo.Review" useGeneratedKeys="true" keyProperty="">
+        insert into sys_review(review_customerId,review_customerName,review_userId,review_userName,review_createDate,
+                               review_UCVARight,review_UCVALeft,review_CVARight,review_CVALeft,review_Right,review_Left,
+                               review_positionOfEye,review_ACA,review_suggest)
+        values (#{review_customerId},#{review_customerName},#{review_userId},#{review_userName},#{review_createDate},
+                #{review_UCVARight},#{review_UCVALeft},#{review_CVARight},#{review_CVALeft},#{review_Right},#{review_Left},
+                #{review_positionOfEye},#{review_ACA},#{review_suggest})
+    </insert>
+    <delete id="deleteReviewByCustomerId" parameterType="java.lang.Integer">
+        delete from sys_review where review_customerId = #{review_customerId}
+    </delete>
+    <delete id="deleteReviewById" parameterType="java.lang.Integer">
+        delete from sys_review where review_id = #{review_id}
+    </delete>
+    <select id="findCustomerReviewByCustomerId" resultMap="BaseResultMap">
+        select * from sys_review where review_customerId = #{review_customerId}
+        order by review_id
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="customerVipTotalCount" resultType="java.lang.Integer">
+        select count(review_id) from sys_review where review_customerId = #{review_customerId}
+    </select>
+
+
+</mapper>

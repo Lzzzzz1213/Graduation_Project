@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.EmailMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.Email">
+        <result column="email_id" property="email_id" />
+        <result column="email_customerID" property="email_customerID" />
+        <result column="email_customerName" property="email_customerName" />
+        <result column="email_userId" property="email_userId" />
+        <result column="email_userName" property="email_userName" />
+        <result column="email_message" property="email_message" />
+        <result column="email_createDate" property="email_createDate" />
+    </resultMap>
+    <insert id="addEmailMessage" useGeneratedKeys="true" keyProperty="email_id">
+        insert into sys_email(email_customerID,email_customerName,email_userId,email_userName,email_message,email_createDate)
+        values (#{email_customerID},#{email_customerName},#{email_userId},#{email_userName},#{email_message},#{email_createDate})
+    </insert>
+    <update id="updateEmailMessage" parameterType="com.glasssellmanagersystem.pojo.Email">
+        update sys_email set
+            email_createDate = #{email_createDate}
+        where email_customerID = #{email_customerID} and email_message = #{email_message}
+    </update>
+    <select id="findEmailMessageByCustomer" resultMap="BaseResultMap">
+        select * from sys_email where email_customerId = #{email_customerId} and email_message = #{email_message}
+    </select>
+
+</mapper>

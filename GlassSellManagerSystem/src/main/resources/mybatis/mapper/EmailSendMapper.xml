@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.EmailSendMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.EmailSend">
+        <result column="emailSend_id" property="emailSend_id" />
+        <result column="emailSend_to" property="emailSend_to" />
+        <result column="emailSend_from" property="emailSend_from" />
+        <result column="emailSend_subject" property="emailSend_subject" />
+        <result column="emailSend_text" property="emailSend_text" />
+        <result column="emailSend_createDate" property="emailSend_createDate" />
+    </resultMap>
+    <insert id="addEmailSend" parameterType="com.glasssellmanagersystem.pojo.EmailSend" keyProperty="emailSend_id" useGeneratedKeys="true">
+        insert into sys_emailsend(emailSend_to,emailSend_from,emailSend_subject,emailSend_text,emailSend_createDate)
+        values (#{emailSend_to},#{emailSend_from},#{emailSend_subject},#{emailSend_text},#{emailSend_createDate})
+    </insert>
+    <delete id="deleteEmailSend" parameterType="com.glasssellmanagersystem.pojo.EmailSend">
+        delete from sys_emailsend where emailSend_id = #{emailSend_id}
+    </delete>
+    <select id="getAllEmailSendList" resultMap="BaseResultMap" parameterType="com.glasssellmanagersystem.pojo.EmailSend">
+        select * from sys_emailsend
+        order by emailSend_id
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countEmailSend" resultType="java.lang.Integer">
+        select count(*) from sys_emailsend
+    </select>
+</mapper>

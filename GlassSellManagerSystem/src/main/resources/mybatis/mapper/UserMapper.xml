@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.UserMapper">
+    <insert id="addUser" parameterType="com.glasssellmanagersystem.pojo.User" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user(name,birthday,address,username,password,position,email,permission,sex,phonenumber)
+        values(#{name},#{birthday},#{address},#{username},#{password},#{position},#{email},#{permission},#{sex},#{phonenumber})
+    </insert>
+    <update id="upDataUser" parameterType="com.glasssellmanagersystem.pojo.User">
+        update sys_user set
+        name = #{name} ,
+        address = #{address},
+        username = #{username},
+        position = #{position},
+        email = #{email},
+        permission = #{permission},
+        sex = #{sex},
+        phonenumber = #{phonenumber}
+        where id = #{id}
+
+
+
+
+
+    </update>
+    <update id="changeUserPass" parameterType="com.glasssellmanagersystem.pojo.User">
+        update sys_user set
+        password = #{password}
+        where id = #{id}
+    </update>
+    <delete id="deleteUser" parameterType="integer">
+        delete from sys_user where id = #{id}
+    </delete>
+
+    <select id="findUser" resultType="com.glasssellmanagersystem.pojo.User">
+        select * from sys_user where
+        <if test="username!=null and username!='' ">
+            username = #{username}
+        </if>
+        <if test="password!=null and password!='' ">
+            and password = #{password}
+        </if>
+    </select>
+
+    <select id="finAllUsers" resultType="com.glasssellmanagersystem.pojo.User">
+        select * from sys_user
+    </select>
+
+    <select id="findUserByUsername" resultType="com.glasssellmanagersystem.pojo.User">
+        select * from sys_user where username = #{username}
+    </select>
+
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(id) from sys_user
+    </select>
+
+    <select id="getAllUserList" resultType="com.glasssellmanagersystem.pojo.User">
+        select * from sys_user order by position
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="finUserById" resultType="com.glasssellmanagersystem.pojo.User">
+        select * from sys_user where id = #{id}
+    </select>
+    <select id="checkUserPassById" resultType="java.lang.Integer">
+        select count(*) from sys_user where id = #{id} and password = #{password}
+    </select>
+</mapper>

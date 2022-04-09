@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.WelcomeMapper">
+
+    <select id="countCustomer" resultType="java.lang.Integer">
+        select count(customer_id) from sys_customer
+    </select>
+    <select id="countVipCustomer" resultType="java.lang.Integer">
+        select count(customer_id) from sys_customer where customer_vip = 'vip'
+    </select>
+    <select id="countOrder" resultType="java.lang.Integer">
+        select count(order_id) from sys_order
+    </select>
+    <select id="countProduct" resultType="java.lang.Integer">
+        select count(product_id) from sys_product
+    </select>
+    <select id="countProductPackage" resultType="java.lang.Integer">
+        select count(productPackage_id) from sys_productpackage
+    </select>
+    <select id="countSchool" resultType="java.lang.Integer">
+        select count(school_id) from sys_school
+    </select>
+    <select id="lastDayOrder" resultType="java.lang.Integer">
+        select count(*) from sys_order where to_days(now()) - to_days(order_createDate) = 1
+    </select>
+    <select id="lastDayCustomer" resultType="java.lang.Integer">
+        select count(*) from sys_customer where to_days(now()) - to_days(customer_lastDate) = 1
+    </select>
+    <select id="nowDayOrder" resultType="java.lang.Integer">
+        select count(*) from sys_order where to_days(order_createDate) = to_days(now())
+    </select>
+    <select id="nowDayCustomer" resultType="java.lang.Integer">
+        select count(*) from sys_customer where to_days(customer_lastDate) = to_days(now())
+    </select>
+
+</mapper>

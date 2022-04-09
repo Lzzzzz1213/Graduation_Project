@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.SelectMapper">
+    <resultMap id="UserMap" type="com.glasssellmanagersystem.pojo.User">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="birthday" property="birthday" />
+        <result column="address" property="address" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="position" property="position" />
+        <result column="email" property="email" />
+        <result column="permission" property="permission" />
+        <result column="sex" property="sex" />
+        <result column="phonenumber" property="phonenumber" />
+    </resultMap>
+    <resultMap id="CustomerMap" type="com.glasssellmanagersystem.pojo.Customer">
+        <result column="customer_id" property="customer_id" />
+        <result column="customer_name" property="customer_name" />
+        <result column="customer_sex" property="customer_sex" />
+        <result column="customer_birthday" property="customer_birthday" />
+        <result column="customer_schoolName" property="customer_schoolName" />
+        <result column="customer_address" property="customer_address" />
+        <result column="customer_qqNumber" property="customer_qqNumber" />
+        <result column="customer_phoneNumber" property="customer_phoneNumber" />
+        <result column="customer_email" property="customer_email" />
+        <result column="customer_parentMomPhoneNumber" property="customer_parentMomPhoneNumber" />
+        <result column="customer_parentDadPhoneNumber" property="customer_parentDadPhoneNumber" />
+        <result column="customer_height" property="customer_height" />
+        <result column="customer_weight" property="customer_weight" />
+        <result column="customer_physicalTherapyAdvice" property="customer_physicalTherapyAdvice" />
+        <result column="customer_remarks" property="customer_remarks" />
+        <result column="customer_history" property="customer_history" />
+        <result column="customer_PDRight" property="customer_PDRight" />
+        <result column="customer_PDLeft" property="customer_PDLeft" />
+        <result column="customer_glassesDegree" property="customer_glassesDegree" />
+        <result column="customer_createOrderDate" property="customer_createOrderDate" />
+        <result column="customer_getOrderDate" property="customer_getOrderDate" />
+        <result column="customer_glassesType" property="customer_glassesType" />
+        <result column="customer_framesType" property="customer_framesType" />
+        <result column="customer_createDate" property="customer_createDate" />
+        <result column="customer_lastDate" property="customer_lastDate" />
+        <result column="customer_userId" property="customer_userId" />
+        <result column="customer_userName" property="customer_userName" />
+        <result column="customer_vip" property="customer_vip" />
+        <result column="customer_visionRight" property="customer_visionRight" />
+        <result column="customer_visionLeft" property="customer_visionLeft" />
+    </resultMap>
+    <resultMap id="OrderMap" type="com.glasssellmanagersystem.pojo.Order">
+        <result column="order_id" property="order_id" />
+        <result column="order_amount" property="order_amount" />
+        <result column="order_payAmount" property="order_payAmount" />
+        <result column="order_oderState" property="order_oderState" />
+        <result column="order_paymentState" property="order_paymentState" />
+        <result column="order_logisticsState" property="order_logisticsState" />
+        <result column="order_paymentWay" property="order_paymentWay" />
+        <result column="order_logisticsName" property="order_logisticsName" />
+        <result column="order_createDate" property="order_createDate" />
+        <result column="order_userId" property="order_userId" />
+        <result column="order_userName" property="order_userName" />
+        <result column="order_customerId" property="order_customerId" />
+        <result column="order_customerName" property="order_customerName" />
+        <result column="order_registerInfoId" property="order_registerInfoId" />
+        <result column="order_number" property="order_number" />
+        <result column="order_productDescribe" property="order_productDescribe" />
+        <result column="order_customerDegreeInfo" property="order_customerDegreeInfo" />
+        <result column="order_successDate" property="order_successDate" />
+    </resultMap>
+    <resultMap id="ProductMap" type="com.glasssellmanagersystem.pojo.Product">
+        <result column="product_id" property="product_id"/>
+        <result column="product_name" property="product_name"/>
+        <result column="product_createDate" property="product_createDate"/>
+        <result column="product_price" property="product_price"/>
+        <result column="product_number" property="product_number"/>
+    </resultMap>
+    <resultMap id="ProductPackageMap" type="com.glasssellmanagersystem.pojo.ProductPackage">
+        <result column="productPackage_id" property="productPackage_id"/>
+        <result column="productPackage_name" property="productPackage_name"/>
+        <result column="productPackage_price" property="productPackage_price"/>
+        <result column="productPackage_describe" property="productPackage_describe"/>
+        <result column="productPackage_createDate" property="productPackage_createDate"/>
+        <result column="productPackage_number" property="productPackage_number"/>
+    </resultMap>
+    <resultMap id="SchoolMap" type="com.glasssellmanagersystem.pojo.School">
+        <result column="school_id" property="school_id"/>
+        <result column="school_name" property="school_name"/>
+    </resultMap>
+    <resultMap id="EmailSendMap" type="com.glasssellmanagersystem.pojo.EmailSend">
+        <result column="emailSend_id" property="emailSend_id" />
+        <result column="emailSend_to" property="emailSend_to" />
+        <result column="emailSend_from" property="emailSend_from" />
+        <result column="emailSend_subject" property="emailSend_subject" />
+        <result column="emailSend_text" property="emailSend_text" />
+        <result column="emailSend_createDate" property="emailSend_createDate" />
+    </resultMap>
+    <select id="findUserByName" resultMap="UserMap" parameterType="com.glasssellmanagersystem.pojo.User">
+        select * from sys_user where name like concat(concat('%',#{name}),'%')
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countUserByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.User">
+        select count(*) from sys_user where name like concat(concat('%',#{name}),'%')
+    </select>
+
+    <select id="findCustomerByName" resultMap="CustomerMap" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        select * from sys_customer where customer_name like concat(concat('%',#{customer_name}),'%')
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countCustomerByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        select count(*) from sys_customer where customer_name like concat(concat('%',#{customer_name}),'%')
+    </select>
+    <select id="findVipCustomerByName" resultMap="CustomerMap" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        select * from sys_customer where customer_name like concat(concat('%',#{customer_name}),'%') and customer_vip = 'vip'
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countVipCustomerByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        select count(*) from sys_customer where customer_name like concat(concat('%',#{customer_name}),'%') and customer_vip = 'vip'
+    </select>
+    <select id="findOrderByName" resultMap="OrderMap" parameterType="com.glasssellmanagersystem.pojo.Order">
+        select * from sys_order where order_customerName like concat(concat('%',#{order_customerName}),'%')
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countOrderByname" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.Order">
+        select count(*) from sys_order where order_customerName like concat(concat('%',#{order_customerName}),'%')
+    </select>
+    <select id="findProductByName" resultMap="ProductMap" parameterType="com.glasssellmanagersystem.pojo.Product">
+        select * from sys_product where product_name like concat(concat('%',#{product_name}),'%')
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countProductByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.Product">
+        select count(*) from sys_product where product_name like concat(concat('%',#{product_name}),'%')
+    </select>
+    <select id="findProductPackageByName" resultMap="ProductPackageMap" parameterType="com.glasssellmanagersystem.pojo.ProductPackage">
+        select * from sys_productpackage where productPackage_name like concat(concat('%',#{productPackage_name}),'%')
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countProductPackageByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.ProductPackage">
+        select count(*) from sys_productpackage where productPackage_name like concat(concat('%',#{productPackage_name}),'%')
+    </select>
+    <select id="findSchoolByName" resultMap="SchoolMap" parameterType="com.glasssellmanagersystem.pojo.School">
+        select * from sys_school where school_name like concat(concat('%',#{school_name}),'%')
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="countSchoolByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.School">
+        select count(*) from sys_school where school_name like concat(concat('%',#{school_name}),'%')
+    </select>
+    <select id="findEmailSendByName" resultMap="EmailSendMap" parameterType="com.glasssellmanagersystem.pojo.EmailSend">
+        select * from sys_emailsend where emailSend_from like concat(concat('%',#{emailSend_from}),'%')
+    </select>
+    <select id="countEmailSendByName" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.EmailSend">
+        select count(*) from sys_emailsend where emailSend_from like concat(concat('%',#{emailSend_from}),'%')
+    </select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.SchoolMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.School">
+        <result column="school_id" property="school_id"/>
+        <result column="school_name" property="school_name"/>
+    </resultMap>
+    <insert id="addSchool" parameterType="com.glasssellmanagersystem.pojo.School" keyProperty="school_id" useGeneratedKeys="true">
+        insert into sys_school(school_name)
+        values (#{school_name})
+    </insert>
+    <delete id="deleteSchool">
+        delete from sys_school where school_id =#{school_id}
+    </delete>
+    <select id="findAllSchool" resultMap="BaseResultMap">
+        select * from sys_school
+    </select>
+    <select id="getAllSchoolsList" resultMap="BaseResultMap">
+        select * from sys_school
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(school_id) from sys_school
+    </select>
+    <select id="findSchoolByName" resultType="java.lang.Integer">
+        select count(*) from sys_school where school_name = #{school_name}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.CustomerMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.Customer">
+        <result column="customer_id" property="customer_id" />
+        <result column="customer_name" property="customer_name" />
+        <result column="customer_sex" property="customer_sex" />
+        <result column="customer_birthday" property="customer_birthday" />
+        <result column="customer_schoolName" property="customer_schoolName" />
+        <result column="customer_address" property="customer_address" />
+        <result column="customer_qqNumber" property="customer_qqNumber" />
+        <result column="customer_phoneNumber" property="customer_phoneNumber" />
+        <result column="customer_email" property="customer_email" />
+        <result column="customer_parentMomPhoneNumber" property="customer_parentMomPhoneNumber" />
+        <result column="customer_parentDadPhoneNumber" property="customer_parentDadPhoneNumber" />
+        <result column="customer_height" property="customer_height" />
+        <result column="customer_weight" property="customer_weight" />
+        <result column="customer_physicalTherapyAdvice" property="customer_physicalTherapyAdvice" />
+        <result column="customer_remarks" property="customer_remarks" />
+        <result column="customer_history" property="customer_history" />
+        <result column="customer_PDRight" property="customer_PDRight" />
+        <result column="customer_PDLeft" property="customer_PDLeft" />
+        <result column="customer_glassesDegree" property="customer_glassesDegree" />
+        <result column="customer_createOrderDate" property="customer_createOrderDate" />
+        <result column="customer_getOrderDate" property="customer_getOrderDate" />
+        <result column="customer_glassesType" property="customer_glassesType" />
+        <result column="customer_framesType" property="customer_framesType" />
+        <result column="customer_createDate" property="customer_createDate" />
+        <result column="customer_lastDate" property="customer_lastDate" />
+        <result column="customer_userId" property="customer_userId" />
+        <result column="customer_userName" property="customer_userName" />
+        <result column="customer_vip" property="customer_vip" />
+        <result column="customer_visionRight" property="customer_visionRight" />
+        <result column="customer_visionLeft" property="customer_visionLeft" />
+    </resultMap>
+    <insert id="addCustomer" parameterType="com.glasssellmanagersystem.pojo.Customer" keyProperty="customer_id" useGeneratedKeys="true">
+        insert into sys_customer(customer_name,customer_sex,customer_birthday,customer_height,
+                                 customer_weight,customer_schoolName,customer_phoneNumber,
+                                 customer_email,customer_address,customer_userId,customer_userName,customer_createDate)
+        values (
+                #{customer_name},
+                #{customer_sex},
+                #{customer_birthday},
+                #{customer_height},
+                #{customer_weight},
+                #{customer_schoolName},
+                #{customer_phoneNumber},
+                #{customer_email},
+                #{customer_address},
+                #{customer_userId},
+                #{customer_userName},
+                #{customer_createDate}
+                )
+    </insert>
+    <update id="upCheckTime" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set customer_lastDate =#{customer_lastDate} where customer_id = #{customer_id}
+    </update>
+    <update id="completeCustomerInformation" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set
+        customer_history = #{customer_history},
+        customer_PDRight = #{customer_PDRight},
+        customer_PDLeft = #{customer_PDLeft},
+        customer_visionRight = #{customer_visionRight},
+        customer_visionLeft = #{customer_visionLeft}
+        where customer_id = #{customer_id}
+    </update>
+    <update id="updateCustomerGlassAndFrame" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set
+            customer_glassesType = #{customer_glassesType},
+            customer_framesType = #{customer_framesType},
+            customer_glassesDegree = #{customer_glassesDegree}
+            where customer_id = #{customer_id}
+    </update>
+    <update id="updateCustomerVipById" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set
+            customer_vip = 'vip'
+        where customer_id = #{customer_id}
+    </update>
+    <update id="updateCustomerCreateOrderDate" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set
+            customer_createOrderDate = #{customer_createOrderDate}
+        where customer_id = #{customer_id}
+    </update>
+    <update id="updateCustomerGetGlassDate" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update sys_customer set
+            customer_getOrderDate = #{customer_getOrderDate}
+        where customer_id = #{customer_id}
+    </update>
+    <update id="completeInfo" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set
+            customer_parentMomPhoneNumber = #{customer_parentMomPhoneNumber},
+            customer_parentDadPhoneNumber = #{customer_parentDadPhoneNumber},
+            customer_height = #{customer_height},
+            customer_weight = #{customer_weight},
+            customer_physicalTherapyAdvice = #{customer_physicalTherapyAdvice},
+            customer_remarks = #{customer_remarks}
+        where customer_id = #{customer_id}
+    </update>
+    <update id="customerInfoEdit" parameterType="com.glasssellmanagersystem.pojo.Customer">
+        update sys_customer set
+        customer_name =#{customer_name},customer_sex =#{customer_sex},customer_birthday = #{customer_birthday},customer_height = #{customer_height},
+        customer_weight = #{customer_weight},customer_schoolName = #{customer_schoolName},customer_phoneNumber = #{customer_phoneNumber},
+        customer_email = #{customer_email},customer_address = #{customer_address}
+        where customer_id = #{customer_id}
+    </update>
+    <delete id="deleteCustomerById" parameterType="java.lang.Integer">
+        delete from sys_customer where customer_id = #{customer_id}
+    </delete>
+    <select id="getAllCustomersList" resultMap="BaseResultMap">
+        select * from sys_customer order by customer_id
+            limit #{currentPage},#{pageSize}
+    </select>
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(customer_id) from sys_customer
+    </select>
+    <select id="getCustomerAge" resultType="java.lang.String" parameterType="integer">
+        select TIMESTAMPDIFF(year,customer_birthday,now()) from sys_customer where customer_id = #{customer_id};
+    </select>
+    <select id="findCustomerById" resultMap="BaseResultMap">
+        select * from sys_customer where customer_id = #{customer_id}
+    </select>
+    <select id="getAllVipCustomersList" resultMap="BaseResultMap">
+        select * from sys_customer
+        where customer_vip = 'vip'
+        order by customer_id
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="vipTotalCount" resultType="java.lang.Integer">
+        select count(customer_id) from sys_customer where  customer_vip = 'vip'
+    </select>
+</mapper>

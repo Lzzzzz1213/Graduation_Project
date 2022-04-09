@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.ProductPackageMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.ProductPackage">
+        <result column="productPackage_id" property="productPackage_id"/>
+        <result column="productPackage_name" property="productPackage_name"/>
+        <result column="productPackage_price" property="productPackage_price"/>
+        <result column="productPackage_describe" property="productPackage_describe"/>
+        <result column="productPackage_createDate" property="productPackage_createDate"/>
+        <result column="productPackage_number" property="productPackage_number"/>
+    </resultMap>
+    <insert id="addProductPackage" parameterType="com.glasssellmanagersystem.pojo.Product" useGeneratedKeys="true" keyProperty="productPackage_id">
+        insert into sys_productpackage(productPackage_name,productPackage_price,productPackage_describe,productPackage_createDate,productPackage_number)
+        values (#{productPackage_name},#{productPackage_price},#{productPackage_describe},#{productPackage_createDate},#{productPackage_number})
+    </insert>
+    <update id="updateProductPackage" parameterType="com.glasssellmanagersystem.pojo.Product">
+        update sys_productpackage set
+        productPackage_name = #{productPackage_name},productPackage_price = #{productPackage_price},
+        productPackage_describe = #{productPackage_describe},productPackage_createDate = #{productPackage_createDate},
+        productPackage_number = #{productPackage_number}
+        where productPackage_id = #{productPackage_id}
+    </update>
+    <delete id="deleteProductPackage" parameterType="java.lang.Integer">
+        delete from sys_productpackage where productPackage_id = #{productPackage_id}
+    </delete>
+    <select id="findAllProductPackage" resultMap="BaseResultMap">
+        select * from sys_productpackage
+    </select>
+    <select id="getAllProductPackageList" resultMap="BaseResultMap">
+        select * from sys_productpackage order by productPackage_id
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="totalCount" resultType="java.lang.Integer">
+        select count(*) from sys_productpackage
+    </select>
+    <select id="findProductPackageById" resultMap="BaseResultMap">
+        select * from sys_productpackage
+        where productPackage_id = #{productPackage_id}
+    </select>
+    <select id="findProductPackageByNumber" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from sys_productpackage
+        where productPackage_number = #{productPackage_number}
+    </select>
+
+</mapper>

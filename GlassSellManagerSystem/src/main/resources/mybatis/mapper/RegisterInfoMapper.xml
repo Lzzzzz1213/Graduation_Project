@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasssellmanagersystem.dao.RegisterInfoMapper">
+    <resultMap id="BaseResultMap" type="com.glasssellmanagersystem.pojo.RegisterInfo">
+        <result column="registerInfo_id" property="registerInfo_id"/>
+        <result column="registerInfo_customerId" property="registerInfo_customerId"/>
+        <result column="registerInfo_customerName" property="registerInfo_customerName"/>
+        <result column="registerInfo_userId" property="registerInfo_userId"/>
+        <result column="registerInfo_userName" property="registerInfo_userName"/>
+        <result column="registerInfo_visionRight" property="registerInfo_visionRight"/>
+        <result column="registerInfo_visionLeft" property="registerInfo_visionLeft"/>
+        <result column="registerInfo_history" property="registerInfo_history"/>
+        <result column="registerInfo_support" property="registerInfo_support"/>
+        <result column="registerInfo_PDRight" property="registerInfo_PDRight"/>
+        <result column="registerInfo_PDLeft" property="registerInfo_PDLeft"/>
+        <result column="registerInfo_loinMiroirDeBouleRight" property="registerInfo_loinMiroirDeBouleRight"/>
+        <result column="registerInfo_loinMiroirDeColonneRight" property="registerInfo_loinMiroirDeColonneRight"/>
+        <result column="registerInfo_loinAxeRight" property="registerInfo_loinAxeRight"/>
+        <result column="registerInfo_loinCorrectionRight" property="registerInfo_loinCorrectionRight"/>
+        <result column="registerInfo_loinMiroirDeBouleLeft" property="registerInfo_loinMiroirDeBouleLeft"/>
+        <result column="registerInfo_loinMiroirDeColonneLeft" property="registerInfo_loinMiroirDeColonneLeft"/>
+        <result column="registerInfo_loinAxeLeft" property="registerInfo_loinAxeLeft"/>
+        <result column="registerInfo_loinCorrectionLeft" property="registerInfo_loinCorrectionLeft"/>
+        <result column="registerInfo_procheMiroirDeBouleRight" property="registerInfo_procheMiroirDeBouleRight"/>
+        <result column="registerInfo_procheMiroirDeColonneRight" property="registerInfo_procheMiroirDeColonneRight"/>
+        <result column="registerInfo_procheAxeRight" property="registerInfo_procheAxeRight"/>
+        <result column="registerInfo_procheCorrectionRight" property="registerInfo_procheCorrectionRight"/>
+        <result column="registerInfo_procheMiroirDeBouleLeft" property="registerInfo_procheMiroirDeBouleLeft"/>
+        <result column="registerInfo_procheMiroirDeColonneLeft" property="registerInfo_procheMiroirDeColonneLeft"/>
+        <result column="registerInfo_procheAxeLeft" property="registerInfo_procheAxeLeft"/>
+        <result column="registerInfo_procheCorrectionLeft" property="registerInfo_procheCorrectionLeft"/>
+        <result column="registerInfo_createDate" property="registerInfo_createDate"/>
+
+    </resultMap>
+    <insert id="addRegisterInfo" parameterType="com.glasssellmanagersystem.pojo.RegisterInfo" useGeneratedKeys="true" keyProperty="registerInfo_id">
+        insert into sys_registerinfo (registerInfo_PDLeft,registerInfo_PDRight,registerInfo_customerId,registerInfo_history,
+                                      registerInfo_loinAxeLeft,registerInfo_loinAxeRight,registerInfo_loinCorrectionLeft,
+                                      registerInfo_loinCorrectionRight,registerInfo_loinMiroirDeBouleLeft,registerInfo_loinMiroirDeBouleRight,
+                                      registerInfo_loinMiroirDeColonneLeft,registerInfo_loinMiroirDeColonneRight,registerInfo_procheAxeLeft,
+                                      registerInfo_procheAxeRight,registerInfo_procheCorrectionLeft,registerInfo_procheCorrectionRight,
+                                      registerInfo_procheMiroirDeBouleLeft,registerInfo_procheMiroirDeBouleRight,registerInfo_procheMiroirDeColonneLeft,
+                                      registerInfo_procheMiroirDeColonneRight,registerInfo_visionLeft,registerInfo_visionRight,registerInfo_createDate,
+                                      registerInfo_userId,registerInfo_userName,registerInfo_customerName)
+        values (#{registerInfo_PDLeft},#{registerInfo_PDRight},
+                #{registerInfo_customerId},#{registerInfo_history},
+                #{registerInfo_loinAxeLeft,jdbcType=VARCHAR},#{registerInfo_loinAxeRight,jdbcType=VARCHAR},
+                #{registerInfo_loinCorrectionLeft,jdbcType=VARCHAR},#{registerInfo_loinCorrectionRight,jdbcType=VARCHAR},
+                #{registerInfo_loinMiroirDeBouleLeft,jdbcType=VARCHAR},#{registerInfo_loinMiroirDeBouleRight,jdbcType=VARCHAR},
+                #{registerInfo_loinMiroirDeColonneLeft,jdbcType=VARCHAR},#{registerInfo_loinMiroirDeColonneRight,jdbcType=VARCHAR},
+                #{registerInfo_procheAxeLeft,jdbcType=VARCHAR},#{registerInfo_procheAxeRight,jdbcType=VARCHAR},
+                #{registerInfo_procheCorrectionLeft,jdbcType=VARCHAR},#{registerInfo_procheCorrectionRight,jdbcType=VARCHAR},
+                #{registerInfo_procheMiroirDeBouleLeft,jdbcType=VARCHAR},#{registerInfo_procheMiroirDeBouleRight,jdbcType=VARCHAR},
+                #{registerInfo_procheMiroirDeColonneLeft,jdbcType=VARCHAR},#{registerInfo_procheMiroirDeColonneRight,jdbcType=VARCHAR},
+                #{registerInfo_visionLeft},#{registerInfo_visionRight},
+                #{registerInfo_createDate},
+                #{registerInfo_userId},#{registerInfo_userName},#{registerInfo_customerName})
+    </insert>
+    <update id="updateRegisterSupport" parameterType="com.glasssellmanagersystem.pojo.Order">
+        update sys_registerinfo set
+            registerInfo_support = #{registerInfo_support}
+        where registerInfo_id = #{registerInfo_id}
+    </update>
+    <delete id="deleteRegisterByCustomerId">
+        delete from sys_registerinfo where registerInfo_customerId = #{registerInfo_customerId}
+    </delete>
+    <select id="regeisterForCustomerTotalCount" resultType="java.lang.Integer" parameterType="com.glasssellmanagersystem.pojo.RegisterInfo">
+        select count(registerInfo_id) from sys_registerinfo where registerInfo_customerId = #{registerInfo_customerId}
+    </select>
+    <select id="getAllRegisterForCustomerByCustomerId"
+            resultMap="BaseResultMap" parameterType="com.glasssellmanagersystem.pojo.RegisterInfo">
+        select * from sys_registerinfo
+        where registerInfo_customerId = #{registerInfo_customerId}
+        order by registerInfo_id
+        limit #{currentPage},#{pageSize}
+    </select>
+    <select id="getRegisterInfoById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from sys_registerinfo where registerInfo_id = #{registerInfo_id}
+    </select>
+</mapper>

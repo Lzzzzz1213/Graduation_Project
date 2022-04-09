@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>套餐登记页面</title>
+  <meta content="webkit" name="renderer">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
+        name="viewport"/>
+  <link th:href="@{/css/font.css}" rel="stylesheet">
+  <link th:href="@{/css/xadmin.css}" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+  <script charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
+  <script th:src="@{/js/xadmin.js}" type="text/javascript"></script>
+  <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>套餐登记</legend>
+</fieldset>
+<form action="" class="layui-form layui-form-pane">
+  <div class="layui-form-item">
+    <label class="layui-form-label">套餐名称</label>
+    <div class="layui-input-inline">
+      <input autocomplete="off" class="layui-input" lay-verify="productPackage_name" name="productPackage_name" placeholder="请输入套餐名称" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">套餐价格</label>
+    <div class="layui-input-inline">
+      <input autocomplete="off" class="layui-input" lay-verify="productPackage_price" name="productPackage_price" placeholder="请输入套餐价格" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">套餐内容</label>
+    <div class="layui-input-inline">
+      <input autocomplete="off" class="layui-input" lay-verify="productPackage_describe" name="productPackage_describe" placeholder="请输入套餐内容" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">套餐编号</label>
+    <div class="layui-input-inline">
+      <input autocomplete="off" class="layui-input" lay-verify="productPackage_number" name="productPackage_number" placeholder="请输入套餐编号" type="text">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+</body>
+<script>
+  layui.use(['form', 'code'], function () {
+    form = layui.form;
+    layui.code();
+    form.verify({
+      productPackage_number: [/^.{2,10}$/, '套餐编号不能为空，2位到12位'],
+      productPackage_describe: [/^.{2,10}$/, '套餐描述不能为空，2位到12位'],
+      productPackage_price: [/^.{2,10}$/, '套餐价格不能为空，2位到12位'],
+      productPackage_name:[/^.{2,10}$/, '套餐名称不能为空，2位到12位']
+    });
+
+    //监听提交
+    form.on('submit(submit)',
+            function (data) {
+              addSchool(data.field);
+              return false;
+            });
+  });
+</script>
+<script>
+  function addSchool(data) {
+    $.ajax({
+      type: "POST",
+      // dataType:"json",
+      data: data,
+      url: "http://localhost:9911/user/product/addProductPackage",
+      success: function (data) {
+        layer.alert("添加成功", {
+                  icon: 6
+                },
+                function () {
+                  // 获得frame索引
+                  var index = parent.layer.getFrameIndex(window.name);
+                  //关闭当前frame
+                  parent.layer.close(index);
+                  parent.location.reload();
+                });
+      },
+      error: function (message) {
+        layer.alert("添加商品失败，有重复的商品", {
+                  icon: 5
+                },
+                function () {
+                  // 获得frame索引
+                  var index = parent.layer.getFrameIndex(window.name);
+                  //关闭当前frame
+                  layer.close(index);
+                  location.reload();
+                });
+      }
+    })
+  }
+</script>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+    <script type="text/javascript" th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]--></head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form" action="/user/updataUser" method="post" accept-charset="UTF-8" id="updateUser">
+            <input type="hidden" th:value="${session.user.id}" name="id" id="id">
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="username" name="username" required="" lay-verify="username"
+                           autocomplete="off" class="layui-input" th:value="${session.user.username}"></div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>将会成为您唯一的登入名
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="name" class="layui-form-label">
+                    <span class="x-red">*</span>姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="name" name="name" required="" lay-verify="name" autocomplete="off"
+                           class="layui-input" th:value="${session.user.name}"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="x-red">*</span>性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="女" title="女">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="position" class="layui-form-label">
+                    <span class="x-red">*</span>职务</label>
+                <div class="layui-inline">
+                    <select id="position" name="position" lay-verify="position" lay-search="">
+                        <option value="">选择职务</option>
+                        <option value="员工">员工</option>
+                        <option value="老板">老板</option>
+                        <option value="员工">管理员</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="phone" class="layui-form-label">
+                    <span class="x-red">*</span>手机号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="phone" name="phonenumber" required="" lay-verify="phone" autocomplete="off"
+                           class="layui-input" th:value="${session.user.phonenumber}"></div>
+            </div>
+            <div class="layui-form-item">
+                <label for="address" class="layui-form-label">
+                    <span class="x-red">*</span>住址</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="address" required="" lay-verify="address" autocomplete="off"
+                           class="layui-input" th:value="${session.user.address}"></div>
+            </div>
+            <div class="layui-form-item">
+                <label for="email" class="layui-form-label">
+                    <span class="x-red">*</span>邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="email" name="email" required="" lay-verify="email" autocomplete="off"
+                           class="layui-input" th:value="${session.user.email}"></div>
+            </div>
+            <div class="layui-form-item">
+                <label for="formbtn" class="layui-form-label"></label>
+                <button class="layui-btn " lay-filter="add" lay-submit="" id="formbtn">修改</button>
+                &ensp;&ensp;&ensp;&ensp;&ensp;
+                <button class="layui-btn " lay-filter="reset" lay-submit="" onclick="">重置</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>layui.use(['form', 'layer'],
+    function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer;
+
+        //自定义验证规则
+        form.verify({
+            phone: [/^\d{11}$/, '手机号必须11位'],
+            username: [/^.{6,10}$/, '用户名不能为空，6位到10位'],
+            name: [/^.{2,10}$/, '姓名不能为空，2位到10位'],
+            address: [/^.{2,}$/, '地址不能为空，至少2位'],
+            position: function (value) {
+                if ($('#position').val() == '' || $('#position').val() == null) {
+                    return "请选择职务";
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(add)',
+            function (data) {
+                // console.log(data);
+                updateUser(data.field);
+                return false;
+            });
+
+    });
+</script>
+<script>
+    function updateUser(data) {
+        $.ajax({
+            type: "POST",
+            // dataType:"json",
+            data: data,
+            url: "http://localhost:9911/user/updataUser",
+            success: function (data) {
+                layer.alert("修改成功", {
+                        icon: 6
+                    },
+                    function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        parent.location.reload();
+                    });
+            },
+            error: function (message) {
+                layer.alert("修改失败", {
+                        icon: 5
+                    },
+                    function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        parent.location.reload();
+                    });
+            }
+        })
+    }
+</script>
+</body>
+</html>

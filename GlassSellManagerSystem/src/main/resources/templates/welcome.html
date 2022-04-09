@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+    <head>
+        <meta charset="UTF-8">
+        <title>首页面</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <link rel="stylesheet" th:href="@{/css/font.css}">
+        <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+        <script th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+        <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+        <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript">
+            function mytime() {
+                var mydate = new Date();
+                var year = mydate.getFullYear();
+                var month = mydate.getMonth() + 1;
+                var day = mydate.getDate();
+                var hour = mydate.getHours();
+                var minutes = mydate.getMinutes();
+                if(minutes < 10) {
+                    minutes = '0' + minutes;
+                }
+                var seconds = mydate.getSeconds();
+                if (seconds < 10) {
+                    seconds = '0' + seconds;
+                }
+                var weekday = mydate.getDay();
+                var arr = new Array('星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+                var time = '当前时间:' + year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds + ' ' + arr[weekday];
+                document.getElementById('sys_time').innerHTML = time;
+            }
+            setInterval(mytime, 1000);
+        </script>
+    </head>
+    <body>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <blockquote class="layui-elem-quote">欢迎[[${session.user.position}]]：
+                                <span class="x-red">[[${session.user.name}]]</span>！<span id="sys_time"></span>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">数据统计</div>
+                        <div class="layui-card-body ">
+                            <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>顾客数</h3>
+                                        <p>
+                                            <cite th:text="${countCustomer}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>会员数</h3>
+                                        <p>
+                                            <cite th:text="${countVipCustomer}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>订单数</h3>
+                                        <p>
+                                            <cite th:text="${countOrder}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>商品数</h3>
+                                        <p>
+                                            <cite th:text="${countProduct}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>套餐数</h3>
+                                        <p>
+                                            <cite th:text="${countProductPackage}"></cite></p>
+                                    </a>
+                                </li>
+                                <li class="layui-col-md2 layui-col-xs6 ">
+                                    <a href="javascript:;" class="x-admin-backlog-body">
+                                        <h3>登记学校数</h3>
+                                        <p>
+                                            <cite th:text="${countSchool}"></cite></p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">昨日新增订单
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">昨日</span></div>
+                        <div class="layui-card-body  ">
+                            <p class="layuiadmin-big-font" th:text="${lastDayOrder}">33,555</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">昨日到店顾客
+                            <span class="layui-badge layui-bg-blue layuiadmin-badge">昨日</span></div>
+                        <div class="layui-card-body ">
+                            <p class="layuiadmin-big-font" th:text="${lastDayCustomer}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">今日新增订单
+                            <span class="layui-badge layui-bg-orange layuiadmin-badge">今日</span></div>
+                        <div class="layui-card-body ">
+                            <p class="layuiadmin-big-font" th:text="${nowDayOrder}">33,555</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">今日到店顾客
+                            <span class="layui-badge layui-bg-orange layuiadmin-badge">今日</span></div>
+                        <div class="layui-card-body ">
+                            <p class="layuiadmin-big-font" th:text="${nowDayCustomer}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">系统信息</div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <tbody>
+                                    <tr>
+                                        <th>视力美实体店铺销售管理系统</th>
+                                        <td>V1.0</td></tr>
+                                    <tr>
+                                        <th>服务器地址</th>
+                                        <td th:text="${systemInfo.sysInfo.computerIp}"></td></tr>
+                                    <tr>
+                                        <th>操作系统</th>
+                                        <td th:text="${systemInfo.sysInfo.osName}">WINNT</td></tr>
+                                    <tr>
+                                        <th>运行环境</th>
+                                        <td>SpringBoot2.4.2</td></tr>
+                                    <tr>
+                                        <th>JDK版本</th>
+                                        <td th:text="${systemInfo.jvmInfo.jdkVersion}"></td></tr>
+                                    <tr>
+                                        <th>内存容量</th>
+                                        <td th:text="${systemInfo.memInfo.total}"></td></tr>
+                                    <tr>
+                                        <th>内存占用</th>
+                                        <td th:text="${systemInfo.memInfo.usageRate}"></td></tr>
+                                    <tr>
+                                        <th>MYSQL版本</th>
+                                        <td>5.7.28</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">开发团队</div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <tbody>
+                                    <tr>
+                                        <th>版权所有</th>
+                                        <td>李可
+                                            <a href="https://github.com/Lzzzzz1213" target="_blank">访问官网</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>开发者</th>
+                                        <td>李可(sc.it.like@qq.com)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <style id="welcome_style"></style>
+                <div class="layui-col-md12">
+                    <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,jquery,x-admin,springboot提供技术支持。</blockquote></div>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>
